@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="clothing-store-management:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="60f326b0-bbb0-46bc-b54e-355db5b22281" name="Changes" comment="Script generator" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
+  <component name="ProjectId" id="2817Vjv13nyl2RaYKl2V7XCHOMX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static.js" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\resources\static.js" />
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\webapp\WEB-INF\jsp" />
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\resources\static\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\resources" />
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\resources\css" />
+      <recent name="C:\Users\mohamed.hesham\IdeaProjects\script-generator\src\main\resources\static\images" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bluesoft.scriptgenerator.DTO" />
+      <recent name="com.bluesoft.scriptgenerator" />
+      <recent name="com.hcoder.clothingstoremanagement.repository" />
+      <recent name="com.hcoder.clothingstoremanagement.entity" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ScriptGeneratorApplication">
+    <configuration name="ClothingStoreManagementApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="script-generator" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hcoder.clothingstoremanagement.ClothingStoreManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClothingStoreManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="clothing-store-management" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hcoder.clothingstoremanagement.ClothingStoreManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ScriptGeneratorApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="script-generator" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bluesoft.scriptgenerator.ScriptGeneratorApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ScriptGeneratorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="script-generator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hcoder.clothingstoremanagement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bluesoft.scriptgenerator.ScriptGeneratorApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ClothingStoreManagementApplication" />
+      <item itemvalue="Spring Boot.ClothingStoreManagementApplication (1)" />
+      <item itemvalue="Spring Boot.ScriptGeneratorApplication (1)" />
+      <item itemvalue="Spring Boot.ScriptGeneratorApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ScriptGeneratorApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="60f326b0-bbb0-46bc-b54e-355db5b22281" name="Changes" comment="" />
+      <created>1650372265409</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1650372265409</updated>
+      <workItem from="1650372267940" duration="883000" />
+      <workItem from="1650762487692" duration="1899000" />
+      <workItem from="1652499470014" duration="3702000" />
+      <workItem from="1652572869218" duration="1557000" />
+      <workItem from="1652574467125" duration="1487000" />
+      <workItem from="1652598213780" duration="200000" />
+      <workItem from="1652968862139" duration="30214000" />
+    </task>
+    <task id="LOCAL-00001" summary="fix report bug">
+      <created>1650763382674</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650763382674</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Save database backup">
+      <created>1652559375205</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652559375205</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Script generator">
+      <created>1653150823800</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1653150823800</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Script generator">
+      <created>1653151019914</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1653151019914</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Script generator">
+      <created>1653151079675</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1653151079675</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Script generator">
+      <created>1653152769675</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1653152769675</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="fix report bug" />
+    <MESSAGE value="Save database backup" />
+    <MESSAGE value="Script generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Script generator" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/clothing_store_management$ClothingStoreManagementApplication.ic" NAME="ClothingStoreManagementApplication Coverage Results" MODIFIED="1652500517362" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
