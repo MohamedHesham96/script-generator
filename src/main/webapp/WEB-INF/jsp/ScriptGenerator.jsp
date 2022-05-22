@@ -82,9 +82,10 @@
                     <c:if test="${(loop.index + 1) % 4 == 0 || loop.index == 0}">
                     </c:if>
                     <div class="col-3">
-                        <input class="form-check-input" type="checkbox" value="${table.id}" id="${table.name}"
+                        <input class="form-check-input" type="checkbox" value="${table.id}"
+                               id="${table.name}-${table.id}"
                                style="cursor: pointer">
-                        <label class="col-9" for="${table.name}" style="cursor: pointer">
+                        <label class="col-9" for="${table.name}-${table.id}" style="cursor: pointer">
                             <strong>${table.name}</strong>
                         </label>
                         <span style="cursor: pointer">
