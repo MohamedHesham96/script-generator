@@ -25,17 +25,8 @@
         <img height="120" src="images/msales-logo.png" alt="">
     </div>
 
-    <div class="row mt-4">
-        <div class="d-inline-flex align-items-center w-50">
-            <label for="database-name" class="w-25"><strong>Database name: </strong></label>
-            <input id="database-name" placeholder="" autofocus class="form-control w-75 border-2"
-                   style="font-weight: bold">
-        </div>
-    </div>
-
-
     <div class="row">
-        <div class="alert alert-warning pt-2 pb-2 border-warning mt-2 col-10" role="alert">
+        <div class="alert alert-warning pt-2 pb-2 border-warning mt-3 col-10" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Warning:">
                 <use xlink:href="#exclamation-triangle-fill"></use>
             </svg>
@@ -56,6 +47,12 @@
     </div>
 
     <div class="row">
+        <div class="d-inline-flex align-items-center w-50">
+            <label for="database-name" class="w-25"><strong>Database name: </strong></label>
+            <input id="database-name" placeholder="" autofocus class="form-control w-75 border-2"
+                   style="font-weight: bold">
+        </div>
+
         <div class="d-inline-flex align-items-center w-50">
             <div class="col-2">
                 <label><strong>Query type: </strong></label>
@@ -107,7 +104,7 @@
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-trash"
-                                 viewBox="0 0 16 16" onclick="deleteConfirmation('${table.id}')">
+                                 viewBox="0 0 16 16" onclick="deleteConfirmation('${table.id}', '${table.name}')">
                                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
                                   <path fill-rule="evenodd"
                                         d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
@@ -182,8 +179,10 @@
             databasePart = "Use " + databaseName + "\n\n";
             backupScript += databasePart;
             backupScript += "TODO: Back-Up Script";
+            $("#script").text(backupScript);
+        } else {
+            $("#database-name").focus();
         }
-        $("#script").text(backupScript);
     }
 
     function copyToClipBoard() {
@@ -234,9 +233,9 @@
         });
     }
 
-    function deleteConfirmation(tableRecordId) {
+    function deleteConfirmation(tableRecordId, tableRecordName) {
         bootbox.confirm("Are you sure you want to remove this ?", function (result) {
-            if (result === true) {
+            if (result) {
                 deleteTableRecord(tableRecordId);
             }
         });
