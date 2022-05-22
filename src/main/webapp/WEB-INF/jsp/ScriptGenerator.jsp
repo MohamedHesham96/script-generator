@@ -21,33 +21,41 @@
 </svg>
 
 <div class="container">
-
-    <div class="row align-middle">
-
-        <div class="col-3">
-            <img height="150" src="images/eme-logo.png">
-        </div>
-
-        <div class="alert alert-warning border-warning h-25 mt-5 center-block col-6 text-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-                <use xlink:href="#exclamation-triangle-fill"/>
-            </svg>
-            <strong>Be careful !</strong>
-            Please make sure that you have backed up the database you are using
-        </div>
-        <div class="col-1"></div>
-        <div class="col-1 mt-3">
-            <img height="120" src="images/msales-logo.png">
-        </div>
+    <div class="ml-4 float-end">
+        <img height="120" src="images/msales-logo.png">
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="d-inline-flex align-items-center w-50">
             <label class="w-25"><strong>Database name: </strong></label>
             <input id="database-name" placeholder="" autofocus class="form-control w-75 border-2"
                    style="font-weight: bold">
         </div>
+    </div>
 
+
+    <div class="row">
+        <div class="alert alert-warning pt-2 pb-2 border-warning mt-2 col-10" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Warning:">
+                <use xlink:href="#exclamation-triangle-fill"/>
+            </svg>
+            <strong>Step 1: </strong>
+            Please stop apache service
+        </div>
+        <br>
+        <div class="alert alert-warning border-warning pt-2 pb-2 col-10" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Warning:">
+                <use xlink:href="#exclamation-triangle-fill"/>
+            </svg>
+            <strong>Step 2: </strong>
+            Please make sure that you have backed up the database you are using
+            <button class="btn btn-sm btn-success float-end" onclick="generateBackupScript()" style="font-weight: bold">
+                Generate backup script
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="d-inline-flex align-items-center w-50">
             <div class="col-2">
                 <label><strong>Query type: </strong></label>
@@ -163,6 +171,17 @@
                 $("#script").text("--- Error ---");
             }
         });
+    }
+
+    function generateBackupScript() {
+        var databaseName = $("#database-name").val();
+        var backupScript = "";
+        if (databaseName != "") {
+            databasePart = "Use " + databaseName + "\n\n";
+            backupScript += databasePart;
+            backupScript += "TODO: Back-Up Script";
+        }
+        $("#script").text(backupScript);
     }
 
     function copyToClipBoard() {
