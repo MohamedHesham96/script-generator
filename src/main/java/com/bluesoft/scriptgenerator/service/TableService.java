@@ -38,4 +38,8 @@ public class TableService {
     public void delete(int tableRecordId) {
         tableRecordRepository.deleteById(tableRecordId);
     }
+
+    public TableRecord getById(int tableRecordId) {
+       return tableRecordRepository.findById(tableRecordId).orElseGet(null);
+    }
 }

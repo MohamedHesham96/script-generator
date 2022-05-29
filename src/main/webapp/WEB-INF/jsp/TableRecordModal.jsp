@@ -44,14 +44,27 @@
 
 
 <script>
-    function updateTableRecord(id, name, selectScript, deleteScript) {
+    function updateTableRecord(id) {
         $("#saveButton").attr("onclick", "saveTableRecord(" + true + ")");
         console.log("updateTableRecord: " + id);
-        $("#tableId").val(id);
-        $("#tableName").val(name);
-        $("#selectScript").val(selectScript);
-        $("#deleteScript").val(deleteScript);
-        $("#tableRecordModal").modal("show");
+        $.ajax({
+            url: '/tableRecord/' + id,
+            method: 'GET',
+            contentType: "application/json",
+            success: function (response) {
+                var data = response.data;
+                $("#tableId").val(data.id);
+                $("#tableName").val(data.name);
+                $("#selectScript").val(data.selectScript);
+                $("#deleteScript").val(data.deleteScript);
+                $("#tableRecordModal").modal("show");
+            },
+            error: function () {
+                toastr.error("Failed to save entity data");
+            }
+        });
+
+
     }
 
     function saveTableRecord(isUpdateOperation) {

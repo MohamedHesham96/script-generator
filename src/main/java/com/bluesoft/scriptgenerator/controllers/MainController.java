@@ -53,6 +53,17 @@ public class MainController {
         }
     }
 
+    @GetMapping("/tableRecord/{tableRecordId}")
+    public @ResponseBody
+    Response getTableRecord(@PathVariable int tableRecordId) {
+        try {
+           TableRecord tableRecord =  tableService.getById(tableRecordId);
+            return new Response(true, tableRecord);
+        } catch (Exception e) {
+            return new Response(false, "Failed to save entity data");
+        }
+    }
+
     @DeleteMapping("/tableRecord/{tableRecordId}")
     public @ResponseBody
     Response deleteTableRecord(@PathVariable int tableRecordId) {
