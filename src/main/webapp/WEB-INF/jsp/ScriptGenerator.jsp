@@ -173,12 +173,12 @@
     }
 
     function generateBackupScript() {
-        var databaseName = "\"" + $("#database-name").val() + "\"";
+        var databaseName = $("#database-name").val();
         var backupScript = "";
         if (databaseName !== "") {
-            databasePart = "Use " + databaseName + "\n";
+            databasePart = "Use \"" + databaseName + "\"\n";
             backupScript += databasePart;
-            backupScript += "GO BACKUP DATABASE  " + databaseName + "\nTO DISK" +
+            backupScript += "GO\nBACKUP DATABASE \"" + databaseName + "\"\nTO DISK" +
                 " = 'c:\\" + databaseName + ".bak'\nWITH FORMAT,\n\t" +
                 "MEDIANAME = 'SQLServerBackups',\n\tNAME = 'Full Backup of " + databaseName + "';\nGO";
             $("#script").text(backupScript);
