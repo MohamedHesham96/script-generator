@@ -40,7 +40,7 @@
             </svg>
             <strong>Step 2: </strong>
             Please make sure that you have backed up the database you are using
-            <button class="btn btn-sm btn-success float-end" onclick="generateBackupScript()" style="font-weight: bold">
+            <button class="btn btn-sm btn-success float-end pb-0 pt-0 pl-2 pr-2" onclick="generateBackupScript()" style="font-weight: bold">
                 Generate backup script
             </button>
         </div>
@@ -236,10 +236,18 @@
     }
 
     function deleteConfirmation(tableRecordId, tableRecordName) {
-        bootbox.confirm("Are you sure you want to remove this ?", function (result) {
-            if (result) {
-                deleteTableRecord(tableRecordId);
-            }
+        bootbox.confirm({
+            message: "Are you sure you want to remove '" + tableRecordName + "' ?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-danger'
+                },
+            },
+            callback: function (result) {
+                if (result) {
+                    deleteTableRecord(tableRecordId);
+                }            }
         });
     }
 
