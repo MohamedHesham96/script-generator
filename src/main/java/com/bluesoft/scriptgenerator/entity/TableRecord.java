@@ -16,8 +16,6 @@ public class TableRecord {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "image_path")
-    private String imagePath;
     @Column(name = "select_script")
     private String selectScript;
     @Column(name = "delete_script")
@@ -26,10 +24,9 @@ public class TableRecord {
     public TableRecord() {
     }
 
-    public TableRecord(Integer id, String name, String imagePath, String selectScript, String deleteScript) {
+    public TableRecord(Integer id, String name, String selectScript, String deleteScript) {
         this.id = id;
         this.name = name;
-        this.imagePath = imagePath;
         this.selectScript = selectScript;
         this.deleteScript = deleteScript;
     }
@@ -48,14 +45,6 @@ public class TableRecord {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public String getSelectScript() {
