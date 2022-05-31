@@ -40,7 +40,8 @@
             </svg>
             <strong>Step 2: </strong>
             Please make sure that you have backed up the database you are using
-            <button class="btn btn-sm btn-success float-end pb-0 pt-0 pl-2 pr-2" onclick="generateBackupScript()" style="font-weight: bold">
+            <button class="btn btn-sm btn-success float-end pb-0 pt-0 pl-2 pr-2" onclick="generateBackupScript()"
+                    style="font-weight: bold">
                 Generate backup script
             </button>
         </div>
@@ -66,6 +67,11 @@
             <div class="col-2">
                 <input id="deleteType" name="scriptType" value="delete" type="radio" style="cursor: pointer">
                 <label for="deleteType" style="cursor: pointer">Delete</label>
+            </div>
+
+            <div class="col-2">
+                <input id="withDate" name="scriptType" type="checkbox" style="cursor: pointer">
+                <label for="withDate" style="cursor: pointer; font-weight: bold">With Date</label>
             </div>
         </div>
     </div>
@@ -119,7 +125,7 @@
     </div>
 
     <div class="row mt-4" style="justify-content: center">
-        <a class="btn btn-success col-3" onclick="generateScript()">
+        <a class="btn btn-success col-3" onclick="x()">
             <strong>Generate script</strong>
         </a>
     </div>
@@ -140,8 +146,57 @@
 </div>
 
 <script>
+
+    var dateTimeValue;
+
+    function dateBootBoxPrompt() {
+        bootbox.confirm({
+            title: "Please select date and time",
+            message: 'Before date <input id="dateValue" class="form-control mt-1" type="datetime-local">',
+            callback: function (result) {
+                if (result) {
+                    var dateInputValue = $("#dateValue").val();
+                    if (dateInputValue == "") {
+                        $("#dateValue").addClass("border-danger");
+                        return false;
+                    } else {
+                        var fullDate = new Date(dateInputValue);
+                        dateTimeValue = formatDate(fullDate);
+                        console.log(dateTimeValue);
+                        generateScript();
+                    }
+                } else {
+                    generateScript();
+                }
+            }
+        });
+    }
+
+    function formatDate(fullDate) {
+        var month = fullDate.getMonth();
+        month = month > 10 ? month : "0" + month;
+        var day = fullDate.getDate();
+        day = day > 10 ? day : "0" + day;
+        var houres = fullDate.getHours();
+        houres = houres > 10 ? houres : "0" + houres;
+        var minutes = fullDate.getMinutes();
+        minutes = minutes > 10 ? minutes : "0" + minutes;
+        return fullDate.getFullYear() + "-" + month + "-" + day + " " + houres + ":" + minutes + ":00";
+    }
+
+    var isWithDate;
+
+    function x() {
+        isWithDate = $("#withDate").prop("checked");
+        if (isWithDate) {
+            dateBootBoxPrompt();
+        } else {
+            generateScript();
+        }
+    }
+
     function generateScript() {
-        const checkboxes = $("input:checkbox:checked");
+        const checkboxes = $(".form-check-input:checkbox:checked");
         const databaseName = $("#database-name").val();
         let databasePart = "";
         if (databaseName !== "") {
@@ -163,13 +218,21 @@
             contentType: "application/json",
             success: function (response) {
                 if (response.status === true) {
-                    $("#script").text(databasePart + response.data);
+                    var script = response.data;
+                    if (isWithDate) {
+                        script = setDatePlaceholder(script);
+                    }
+                    $("#script").text(databasePart + script);
                 }
             },
             error: function () {
                 $("#script").text("--- Error ---");
             }
         });
+    }
+
+    function setDatePlaceholder(script) {
+        return script.replaceAll(":dataTimeValue", "'" + dateTimeValue + "'");
     }
 
     function generateBackupScript() {
@@ -204,7 +267,6 @@
         setTimeout("location.reload(true);", timeoutPeriod);
     }
 
-
     function clearForm(formId) {
         $("#" + formId)[0].reset();
         $("#tableId").val("");
@@ -237,6 +299,7 @@
 
     function deleteConfirmation(tableRecordId, tableRecordName) {
         bootbox.confirm({
+            title: "<span class='text-danger'> Remove '" + tableRecordName + "'</span>",
             message: "Are you sure you want to remove '" + tableRecordName + "' ?",
             buttons: {
                 confirm: {
@@ -247,10 +310,10 @@
             callback: function (result) {
                 if (result) {
                     deleteTableRecord(tableRecordId);
-                }            }
+                }
+            }
         });
     }
-
 </script>
 
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
