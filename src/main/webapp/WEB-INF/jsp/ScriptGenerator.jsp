@@ -152,7 +152,7 @@
     function dateBootBoxPrompt() {
         bootbox.confirm({
             title: "Please select date and time",
-            message: 'Before date <input id="dateValue" class="form-control mt-1" type="datetime-local">',
+            message: 'DateTime <input id="dateValue" class="form-control mt-1" type="datetime-local">',
             callback: function (result) {
                 if (result) {
                     var dateInputValue = $("#dateValue").val();
@@ -232,7 +232,7 @@
     }
 
     function setDatePlaceholder(script) {
-        return script.replaceAll(":dataTimeValue", "'" + dateTimeValue + "'");
+        return script.replaceAll(":dateTimeValue", "'" + dateTimeValue + "'");
     }
 
     function generateBackupScript() {
