@@ -11,7 +11,7 @@
 /target/script-generator-1.0.0/WEB-INF/lib/byte-buddy-1.10.6.jar
 /target/script-generator-1.0.0/WEB-INF/lib/classmate-1.5.1.jar
 /target/test-classes/com/bluesoft/scriptgenerator/ClothingStoreManagementApplicationTests.class
-/target/surefire-reports/com.bluesoft.scriptgenerator.ClothingStoreManagementApplicationTests.txt
+/target/surefire-reports/com.bluesoft.scriptgenerator.ScriptGeneratorApplicationTests.txt
 /target/classes/static/js/control.js
 /target/script-generator-1.0.0/WEB-INF/classes/static/js/control.js
 /target/classes/static/images/copy-icon.png
@@ -105,7 +105,7 @@
 /target/script-generator-1.0.0/WEB-INF/classes/com/bluesoft/scriptgenerator/repository/TableRecordRepository.class
 /target/classes/com/bluesoft/scriptgenerator/service/TableService.class
 /target/script-generator-1.0.0/WEB-INF/classes/com/bluesoft/scriptgenerator/service/TableService.class
-/target/surefire-reports/TEST-com.bluesoft.scriptgenerator.ClothingStoreManagementApplicationTests.xml
+/target/surefire-reports/TEST-com.bluesoft.scriptgenerator.ScriptGeneratorApplicationTests.xml
 /target/script-generator-1.0.0/WEB-INF/lib/toastr-2.1.0.jar
 /target/script-generator-1.0.0/WEB-INF/lib/tomcat-annotations-api-9.0.30.jar
 /target/script-generator-1.0.0/WEB-INF/lib/tomcat-embed-core-9.0.30.jar
