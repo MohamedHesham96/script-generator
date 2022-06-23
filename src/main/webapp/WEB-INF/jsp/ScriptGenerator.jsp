@@ -11,6 +11,7 @@
     <title>Script Generator</title>
     <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="webjars/toastr/2.1.0/toastr.min.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -97,7 +98,9 @@
                                id="${table.name}-${table.id}"
                                style="cursor: pointer">
                         <label class="col-9" for="${table.name}-${table.id}" style="cursor: pointer">
-                            <strong>${table.name}</strong>
+                            <strong title="${table.name}" style=" overflow: hidden;  display: inline-block; text-overflow: ellipsis;  white-space: nowrap; width:100%;">
+                                    ${table.name}
+                            </strong>
                         </label>
                         <span style="cursor: pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -165,8 +168,6 @@
                         console.log(dateTimeValue);
                         generateScript();
                     }
-                } else {
-                    generateScript();
                 }
             }
         });
@@ -174,7 +175,7 @@
 
     function formatDate(fullDate) {
         var month = fullDate.getMonth();
-        month = month > 10 ? month : "0" + month;
+        month = ++month > 10 ? month : "0" + month;
         var day = fullDate.getDate();
         day = day > 10 ? day : "0" + day;
         var houres = fullDate.getHours();
@@ -315,12 +316,9 @@
         });
     }
 </script>
-
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/toastr/2.1.0/toastr.min.js"></script>
 <script src="webjars/bootbox/5.5.2/bootbox.js"></script>
-<script src=""></script>
-
 </body>
 </html>
