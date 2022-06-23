@@ -2,6 +2,7 @@ package com.bluesoft.scriptgenerator.controllers;
 
 import com.bluesoft.scriptgenerator.DTO.GenerateScriptRequest;
 import com.bluesoft.scriptgenerator.DTO.Response;
+import com.bluesoft.scriptgenerator.DTO.SearchRequest;
 import com.bluesoft.scriptgenerator.entity.TableRecord;
 import com.bluesoft.scriptgenerator.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,17 @@ public class MainController {
         try {
             generatedScript = tableService.generateScript(generateScriptRequest.getScriptType(), generateScriptRequest.getTablesIds());
             return new Response(true, generatedScript);
+        } catch (Exception e) {
+            return new Response(false, "--- Error ---");
+        }
+    }
+
+    @PostMapping("/search")
+    public @ResponseBody
+    Response search(@RequestBody SearchRequest searchRequest) {
+        try {
+            List<TableRecord> tablesList  = tableService.search(searchRequest.getSearchText(), searchRequest.getSearchInQueries());
+            return new Response(true, tablesList);
         } catch (Exception e) {
             return new Response(false, "--- Error ---");
         }

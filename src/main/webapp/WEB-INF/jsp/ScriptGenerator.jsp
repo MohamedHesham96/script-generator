@@ -49,30 +49,41 @@
     </div>
 
     <div class="row">
-        <div class="d-inline-flex align-items-center w-50">
-            <label for="database-name" class="w-25"><strong>Database name: </strong></label>
-            <input id="database-name" placeholder="" autofocus class="form-control w-75 border-2"
+        <div class="input-group">
+            <label for="database-name" class="list-group-item"><strong>Database name: </strong></label>
+            <input id="database-name" placeholder="database name..." class="form-control list-group-item w-25 border-2"
                    style="font-weight: bold">
-        </div>
 
-        <div class="d-inline-flex align-items-center w-50">
-            <div class="col-2">
+            <div class="list-group-item">
                 <label><strong>Query type: </strong></label>
             </div>
 
-            <div class="col-2">
+            <div class="list-group-item">
                 <input id="selectType" name="scriptType" value="select" type="radio" style="cursor: pointer" checked>
                 <label for="selectType" style="cursor: pointer">Select</label>
             </div>
 
-            <div class="col-2">
+            <div class="list-group-item">
                 <input id="deleteType" name="scriptType" value="delete" type="radio" style="cursor: pointer">
                 <label for="deleteType" style="cursor: pointer">Delete</label>
             </div>
 
-            <div class="col-2">
+            <div class="list-group-item">
                 <input id="withDate" name="scriptType" type="checkbox" style="cursor: pointer">
                 <label for="withDate" style="cursor: pointer; font-weight: bold">With Date</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="input-group">
+            <label for="searchText" class="list-group-item"><strong>Search: </strong></label>
+            <input id="searchText" placeholder="search..." autofocus class="form-control list-group-item w-25 border-2"
+                   style="font-weight: bold">
+            <img style="cursor: pointer" class="list-group-item btn-outline-info"  height="44" src="images/search-icon.png" onclick="searchForData()">
+            <div class="list-group-item">
+                <input id="searchInQueries" name="scriptType" type="checkbox" style="cursor: pointer">
+                <label for="searchInQueries" style="cursor: pointer; font-weight: bold">Search in Queries</label>
             </div>
         </div>
     </div>
@@ -98,7 +109,8 @@
                                id="${table.name}-${table.id}"
                                style="cursor: pointer">
                         <label class="col-9" for="${table.name}-${table.id}" style="cursor: pointer">
-                            <strong title="${table.name}" style=" overflow: hidden;  display: inline-block; text-overflow: ellipsis;  white-space: nowrap; width:100%;">
+                            <strong title="${table.name}"
+                                    style=" overflow: hidden;  display: inline-block; text-overflow: ellipsis;  white-space: nowrap; width:100%;">
                                     ${table.name}
                             </strong>
                         </label>
@@ -232,6 +244,28 @@
         });
     }
 
+    function searchForData() {
+        var searchText = $("#searchText").val();
+        var searchInQueries = $("#searchInQueries").prop("checked");
+
+        const requestBody = {
+            searchText: searchText,
+            searchInQueries: searchInQueries
+        }
+        $.ajax({
+            url: '/search',
+            method: 'POST',
+            data: JSON.stringify(requestBody),
+            contentType: "application/json",
+            success: function (response) {
+                if (response.status === true) {
+                }
+            },
+            error: function () {
+                $("#script").text("--- Error ---");
+            }
+        });
+    }
     function setDatePlaceholder(script) {
         return script.replaceAll(":dateTimeValue", "'" + dateTimeValue + "'");
     }
