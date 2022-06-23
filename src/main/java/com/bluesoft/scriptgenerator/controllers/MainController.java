@@ -45,13 +45,11 @@ public class MainController {
 
     @PostMapping("/search")
     public @ResponseBody
-    Response search(@RequestBody SearchRequest searchRequest) {
-        try {
-            List<TableRecord> tablesList  = tableService.search(searchRequest.getSearchText(), searchRequest.getSearchInQueries());
-            return new Response(true, tablesList);
-        } catch (Exception e) {
-            return new Response(false, "--- Error ---");
-        }
+    ModelAndView search(@RequestBody SearchRequest searchRequest) {
+        ModelAndView searchMV = new ModelAndView("tableRecordsList");
+        List<TableRecord> tablesList = tableService.search(searchRequest.getSearchText(), searchRequest.getSearchInQueries());
+        searchMV.addObject("tablesList", tablesList);
+        return searchMV;
     }
 
     @PostMapping("/tableRecord")
@@ -69,7 +67,7 @@ public class MainController {
     public @ResponseBody
     Response getTableRecord(@PathVariable int tableRecordId) {
         try {
-           TableRecord tableRecord =  tableService.getById(tableRecordId);
+            TableRecord tableRecord = tableService.getById(tableRecordId);
             return new Response(true, tableRecord);
         } catch (Exception e) {
             return new Response(false, "Failed to save entity data");

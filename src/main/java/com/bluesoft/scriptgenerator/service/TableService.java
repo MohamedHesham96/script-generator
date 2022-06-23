@@ -59,7 +59,6 @@ public class TableService {
     }
 
     public List<TableRecord> search(String searchText, Boolean searchInQueries) {
-        String[] tags = searchText.split(",");
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -67,15 +66,18 @@ public class TableService {
         Root<TableRecord> tableRecord = criteria.from(TableRecord.class);
         CriteriaQuery criteriaQuery = criteria.select(tableRecord);
         List<Predicate> predicates = new ArrayList<>();
-        if (!searchInQueries) {
-            for (String tag : tags) {
-                predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
-            }
-        } else {
-            for (String tag : tags) {
-                predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
-                predicates.add(criteriaBuilder.like(tableRecord.get("selectScript"), "%" + tag + "%"));
-                predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
+        if(!searchText.isEmpty()) {
+            String[] tags = searchText.split(",");
+            if (!searchInQueries) {
+                for (String tag : tags) {
+                    predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
+                }
+            } else {
+                for (String tag : tags) {
+                    predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
+                    predicates.add(criteriaBuilder.like(tableRecord.get("selectScript"), "%" + tag + "%"));
+                    predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
+                }
             }
         }
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
