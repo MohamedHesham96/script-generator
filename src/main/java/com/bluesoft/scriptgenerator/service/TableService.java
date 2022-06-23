@@ -66,7 +66,6 @@ public class TableService {
         Root<TableRecord> tableRecord = criteria.from(TableRecord.class);
         CriteriaQuery criteriaQuery = criteria.select(tableRecord);
         List<Predicate> predicates = new ArrayList<>();
-        if(!searchText.isEmpty()) {
             String[] tags = searchText.split(",");
             if (!searchInQueries) {
                 for (String tag : tags) {
@@ -79,7 +78,6 @@ public class TableService {
                     predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
                 }
             }
-        }
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
         Query query = session.createQuery(criteriaQuery);
         return query.getResultList();
