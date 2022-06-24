@@ -80,8 +80,9 @@
             <label for="searchText" class="list-group-item"><strong>Search: </strong></label>
             <input id="searchText" placeholder="search..." autofocus class="form-control list-group-item w-25 border-2"
                    style="font-weight: bold">
-            <img style="cursor: pointer" class="list-group-item btn-outline-info" height="44"
+            <img id="searchButton" style="cursor: pointer" class="list-group-item btn-outline-info" height="44"
                  src="images/search-icon.png" onclick="searchForData()">
+            <img id="loadingIcon" style="display: none" src="/images/spinner.gif" class="list-group-item" height="44"/>
             <div class="list-group-item">
                 <input id="searchInQueries" name="scriptType" type="checkbox" style="cursor: pointer">
                 <label for="searchInQueries" style="cursor: pointer; font-weight: bold">Search in Queries</label>
@@ -210,7 +211,8 @@
     function searchForData() {
         var searchText = $("#searchText").val();
         var searchInQueries = $("#searchInQueries").prop("checked");
-
+        $("#searchButton").hide();
+        $("#loadingIcon").show();
         const requestBody = {
             searchText: searchText,
             searchInQueries: searchInQueries
@@ -222,9 +224,12 @@
             contentType: "application/json",
             success: function (response) {
                 $("#tableRecordsListDev").html(response);
+                $("#loadingIcon").hide();
+                $("#searchButton").show();
             },
             error: function () {
                 toastr.error("Request failed !");
+                timedRefresh(1500);
             }
         });
     }
