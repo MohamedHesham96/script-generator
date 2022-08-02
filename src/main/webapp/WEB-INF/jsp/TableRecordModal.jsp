@@ -21,7 +21,7 @@
                     <input type="hidden" id="tableId">
                     <div class="mb-2">
                         <label for="tableName" class="form-label text-bold">Created by</label>
-                        <input id="createdBy" class="form-control" placeholder="Delete script">
+                        <input id="createdBy" class="form-control" placeholder="Created by">
                     </div>
                     <div class="mb-2">
                         <label for="tableName" class="form-label text-bold">Name</label>
