@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<style>
+    .text-bold {
+        font-weight: bold;
+    }
+</style>
 <div class="modal" id="tableRecordModal" tabindex="-1" aria-labelledby="tableRecordModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -14,27 +19,35 @@
             <div class="modal-body">
                 <form id="tableRecordForm">
                     <input type="hidden" id="tableId">
-                    <%--                    <div class="mb-3">--%>
-                    <%--                        <label for="tableImage" class="form-label">Image</label>--%>
-                    <%--                        <input type="file" class="form-control" id="tableImage" aria-describedby="emailHelp">--%>
-                    <%--                    </div>--%>
-                    <div class="mb-3">
-                        <label for="tableName" class="form-label">Name</label>
-                        <input class="form-control" id="tableName">
+                    <div class="mb-2">
+                        <label for="tableName" class="form-label text-bold">Created by</label>
+                        <input id="createdBy" class="form-control" placeholder="Delete script">
                     </div>
-                    <div class="mb-3">
-                        <label for="selectScript" class="form-label">Select script</label>
-                        <textarea rows="6" class="form-control" id="selectScript"></textarea>
+                    <div class="mb-2">
+                        <label for="tableName" class="form-label text-bold">Name</label>
+                        <input id="tableName" class="form-control" placeholder="name">
                     </div>
-                    <div class="mb-3">
-                        <label for="deleteScript" class="form-label">Delete script</label>
-                        <textarea rows="6" class="form-control" id="deleteScript"></textarea>
+                    <div class="mb-2">
+                        <label for="selectScript" class="form-label text-bold">Select script</label>
+                        <textarea id="selectScript" rows="5" class="form-control"
+                                  placeholder="Select script"></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="deleteScript" class="form-label text-bold">Delete script</label>
+                        <textarea id="deleteScript" rows="5" class="form-control"
+                                  placeholder="Delete script"></textarea>
+                    </div>
+                    <div>
+                        <small for="createdOn" class="text-secondary">Created On:</small>
+                        <small id="createdOn" style="font-weight: bold" class="text-secondary"></small>
+                        <small for="modifiedOn" class="text-secondary">Modified On:</small>
+                        <small id="modifiedOn" style="font-weight: bold" class="text-secondary"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="saveButton" type="button" class="btn btn-primary" onclick="saveTableRecord()">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="saveButton" type="button" class="btn btn-sm btn-primary" onclick="saveTableRecord()">
                     Save changes
                 </button>
             </div>
@@ -54,9 +67,12 @@
             success: function (response) {
                 var data = response.data;
                 $("#tableId").val(data.id);
+                $("#createdBy").val(data.createdBy);
                 $("#tableName").val(data.name);
                 $("#selectScript").val(data.selectScript);
                 $("#deleteScript").val(data.deleteScript);
+                $("#createdOn").text(data.createdOn.replaceAll("T", " ").split(".")[0]);
+                $("#modifiedOn").text(data.modifiedOn.replaceAll("T", " ").split(".")[0]);
                 $("#tableRecordModal").modal("show");
             },
             error: function () {
@@ -71,6 +87,7 @@
         var tableName = $("#tableName").val();
         var selectScript = $("#selectScript").val();
         var deleteScript = $("#deleteScript").val();
+        var createdBy = $("#createdBy").val();
         if (isUpdateOperation) {
             var tableId = $("#tableId").val();
         }
@@ -78,7 +95,8 @@
             id: tableId,
             name: tableName,
             selectScript: selectScript,
-            deleteScript: deleteScript
+            deleteScript: deleteScript,
+            createdBy: createdBy
         }
         toastr.options = {
             "closeButton": true,

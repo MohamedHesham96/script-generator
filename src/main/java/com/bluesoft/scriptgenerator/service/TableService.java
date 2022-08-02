@@ -2,21 +2,18 @@ package com.bluesoft.scriptgenerator.service;
 
 import com.bluesoft.scriptgenerator.entity.TableRecord;
 import com.bluesoft.scriptgenerator.repository.TableRecordRepository;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.LikeExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +40,19 @@ public class TableService {
     }
 
     public List<TableRecord> getAllTables() {
-        return tableRecordRepository.findAll();
+        return tableRecordRepository.findAllByOrderByName();
     }
 
     public TableRecord save(TableRecord tableRecord) {
+        String oldTableName = tableRecord.getName();
+        String newTableName = oldTableName.substring(0, 1).toUpperCase() + oldTableName.substring(1);
+        tableRecord.setName(newTableName);
+        if (tableRecord.getId() == null) {
+            tableRecord.setCreatedOn(LocalDateTime.now());
+        } else {
+            tableRecord.setCreatedOn(tableRecordRepository.getOne(tableRecord.getId()).getCreatedOn());
+        }
+        tableRecord.setModifiedOn(LocalDateTime.now());
         return tableRecordRepository.save(tableRecord);
     }
 
@@ -66,19 +72,20 @@ public class TableService {
         Root<TableRecord> tableRecord = criteria.from(TableRecord.class);
         CriteriaQuery criteriaQuery = criteria.select(tableRecord);
         List<Predicate> predicates = new ArrayList<>();
-            String[] tags = searchText.split(",");
-            if (!searchInQueries) {
-                for (String tag : tags) {
-                    predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
-                }
-            } else {
-                for (String tag : tags) {
-                    predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
-                    predicates.add(criteriaBuilder.like(tableRecord.get("selectScript"), "%" + tag + "%"));
-                    predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
-                }
+        String[] tags = searchText.split(",");
+        if (!searchInQueries) {
+            for (String tag : tags) {
+                predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
             }
+        } else {
+            for (String tag : tags) {
+                predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
+                predicates.add(criteriaBuilder.like(tableRecord.get("selectScript"), "%" + tag + "%"));
+                predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
+            }
+        }
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+        criteriaQuery.orderBy(criteriaBuilder.asc(tableRecord.get("name")));
         Query query = session.createQuery(criteriaQuery);
         return query.getResultList();
     }

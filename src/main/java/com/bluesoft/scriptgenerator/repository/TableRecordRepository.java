@@ -15,4 +15,6 @@ public interface TableRecordRepository extends JpaRepository<TableRecord, Intege
 
     @Query("select t.deleteScript from TableRecord t where t.id in (:ids)")
     List<String> getDeleteScriptByIds(int[] ids);
+
+    List<TableRecord> findAllByOrderByName();
 }

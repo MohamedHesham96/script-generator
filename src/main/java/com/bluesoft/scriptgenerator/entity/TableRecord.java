@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "table_record")
@@ -20,15 +21,14 @@ public class TableRecord {
     private String selectScript;
     @Column(name = "delete_script")
     private String deleteScript;
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+    @Column(name = "modified_on")
+    private LocalDateTime modifiedOn;
 
     public TableRecord() {
-    }
-
-    public TableRecord(Integer id, String name, String selectScript, String deleteScript) {
-        this.id = id;
-        this.name = name;
-        this.selectScript = selectScript;
-        this.deleteScript = deleteScript;
     }
 
     public Integer getId() {
@@ -61,5 +61,29 @@ public class TableRecord {
 
     public void setDeleteScript(String deleteScript) {
         this.deleteScript = deleteScript;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getModifiedOn() {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(LocalDateTime modifiedOn) {
+        this.modifiedOn = modifiedOn;
     }
 }
