@@ -11,8 +11,6 @@
     <title>Script Generator</title>
     <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="webjars/toastr/2.1.0/toastr.min.css" rel="stylesheet">
-    <script>
-    </script>
 </head>
 <body>
 <script>
@@ -85,7 +83,8 @@
     <div class="row mt-3">
         <div class="input-group">
             <label for="searchText" class="list-group-item"><strong>Search: </strong></label>
-            <input id="searchText" onkeypress="searchEnter(event)" placeholder="search..." autofocus class="form-control list-group-item w-25 border-2"
+            <input id="searchText" onkeypress="searchEnter(event)" placeholder="search..." autofocus
+                   class="form-control list-group-item w-25 border-2"
                    style="font-weight: bold">
             <img id="searchButton" style="cursor: pointer" class="list-group-item btn-outline-info" height="44"
                  src="images/search-icon.png" onclick="searchForData()">
@@ -95,6 +94,16 @@
                 <label for="searchInQueries" style="cursor: pointer; font-weight: bold">Search in Queries</label>
             </div>
         </div>
+    </div>
+
+    <div class="mt-3">
+        <strong>Created By:</strong>
+        <span id="All" class="text-bold rounded-pill btn btn-sm btn-outline-primary active"
+              onclick="setLastSelectCreatedById('All'); searchForData();">All</span>
+        <c:forEach items="${createdByNames}" var="createdBy">
+            <span id="${createdBy}" class="text-bold rounded-pill btn btn-sm btn-outline-primary"
+                  onclick="setLastSelectCreatedById('${createdBy}'); searchForData()">${createdBy}</span>
+        </c:forEach>
     </div>
 
     <div class="card mt-3">
@@ -111,7 +120,7 @@
     </div>
 
     <div class="row mt-4" style="justify-content: center">
-        <a class="btn btn-success col-3" onclick="x()">
+        <a class="btn btn-success col-3" onclick="checkIsWithDateFlag()">
             <strong>Generate script</strong>
         </a>
     </div>
@@ -170,7 +179,7 @@
 
     var isWithDate;
 
-    function x() {
+    function checkIsWithDateFlag() {
         isWithDate = $("#withDate").prop("checked");
         if (isWithDate) {
             dateBootBoxPrompt();
@@ -218,11 +227,13 @@
     function searchForData() {
         var searchText = $("#searchText").val();
         var searchInQueries = $("#searchInQueries").prop("checked");
+        var createdBy = $("#" + lastSelectedCreatedById).text();
         $("#searchButton").hide();
         $("#loadingIcon").show();
         const requestBody = {
             searchText: searchText,
-            searchInQueries: searchInQueries
+            searchInQueries: searchInQueries,
+            createdBy: createdBy
         }
         $.ajax({
             url: '/search',
@@ -280,8 +291,10 @@
     function clearForm(formId) {
         $("#" + formId)[0].reset();
         $("#tableId").val("");
-        $("createdOn").text("");
-        $("modifiedOn").text("");
+        $("#createdOn").text("----");
+        $("#modifiedOn").text("----");
+        $("#createdBy").removeClass("is-invalid");
+        $("#tableName").removeClass("is-invalid");
     }
 
     function deleteTableRecord(tableRecordId) {
@@ -325,6 +338,14 @@
                 }
             }
         });
+    }
+
+    let lastSelectedCreatedById = 'All';
+
+    function setLastSelectCreatedById(selectedCreatedById) {
+        $("#" + lastSelectedCreatedById).removeClass("active");
+        $("#" + selectedCreatedById).addClass("active");
+        lastSelectedCreatedById = selectedCreatedById;
     }
 </script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>

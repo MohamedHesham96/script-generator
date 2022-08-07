@@ -88,6 +88,16 @@
         var selectScript = $("#selectScript").val();
         var deleteScript = $("#deleteScript").val();
         var createdBy = $("#createdBy").val();
+        if (createdBy == "") {
+            $("#createdBy").addClass("is-invalid");
+        } else {
+            $("#createdBy").removeClass("is-invalid");
+        }
+        if (tableName == "") {
+            $("#tableName").addClass("is-invalid");
+        } else {
+            $("#tableName").removeClass("is-invalid");
+        }
         if (isUpdateOperation) {
             var tableId = $("#tableId").val();
         }

@@ -25,6 +25,10 @@ public class TableService {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    public List<String> getCreatedByNames() {
+        return tableRecordRepository.getCreatedBy();
+    }
+
     public String generateScript(String scriptType, int[] ids) {
         List<String> scripts;
         if ("select".equalsIgnoreCase(scriptType)) {
@@ -44,9 +48,8 @@ public class TableService {
     }
 
     public TableRecord save(TableRecord tableRecord) {
-        String oldTableName = tableRecord.getName();
-        String newTableName = oldTableName.substring(0, 1).toUpperCase() + oldTableName.substring(1);
-        tableRecord.setName(newTableName);
+        tableRecord.setName(firstLetterUpperCase(tableRecord.getName()));
+        tableRecord.setCreatedBy(firstLetterUpperCase(tableRecord.getCreatedBy()));
         if (tableRecord.getId() == null) {
             tableRecord.setCreatedOn(LocalDateTime.now());
         } else {
@@ -54,6 +57,10 @@ public class TableService {
         }
         tableRecord.setModifiedOn(LocalDateTime.now());
         return tableRecordRepository.save(tableRecord);
+    }
+
+    private String firstLetterUpperCase(String term) {
+        return term.substring(0, 1).toUpperCase() + term.substring(1);
     }
 
     public void delete(int tableRecordId) {
@@ -64,7 +71,7 @@ public class TableService {
         return tableRecordRepository.findById(tableRecordId).orElseGet(null);
     }
 
-    public List<TableRecord> search(String searchText, Boolean searchInQueries) {
+    public List<TableRecord> search(String searchText, Boolean searchInQueries, String createdBy) {
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -84,7 +91,9 @@ public class TableService {
                 predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
             }
         }
-        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+        String createdByLikeTerm = createdBy != null && !createdBy.equalsIgnoreCase("All") ? createdBy.toUpperCase() : "%%";
+        Predicate createdByPredicate = criteriaBuilder.like(criteriaBuilder.upper(tableRecord.get("createdBy")), createdByLikeTerm);
+        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})), createdByPredicate);
         criteriaQuery.orderBy(criteriaBuilder.asc(tableRecord.get("name")));
         Query query = session.createQuery(criteriaQuery);
         return query.getResultList();

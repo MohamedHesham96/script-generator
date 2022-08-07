@@ -17,4 +17,7 @@ public interface TableRecordRepository extends JpaRepository<TableRecord, Intege
     List<String> getDeleteScriptByIds(int[] ids);
 
     List<TableRecord> findAllByOrderByName();
+
+    @Query("select distinct t.createdBy from TableRecord t")
+    List<String> getCreatedBy();
 }

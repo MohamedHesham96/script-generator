@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,7 +29,9 @@ public class MainController {
     public ModelAndView goToHome() {
         ModelAndView homeMV = new ModelAndView("ScriptGenerator");
         List<TableRecord> tablesList = tableService.getAllTables();
+        List<String> createdByNames = tableService.getCreatedByNames();
         homeMV.addObject("tablesList", tablesList);
+        homeMV.addObject("createdByNames", createdByNames);
         return homeMV;
     }
 
@@ -47,7 +51,7 @@ public class MainController {
     public @ResponseBody
     ModelAndView search(@RequestBody SearchRequest searchRequest) {
         ModelAndView searchMV = new ModelAndView("tableRecordsList");
-        List<TableRecord> tablesList = tableService.search(searchRequest.getSearchText(), searchRequest.getSearchInQueries());
+        List<TableRecord> tablesList = tableService.search(searchRequest.getSearchText(), searchRequest.getSearchInQueries(), searchRequest.getCreatedBy());
         searchMV.addObject("tablesList", tablesList);
         return searchMV;
     }
