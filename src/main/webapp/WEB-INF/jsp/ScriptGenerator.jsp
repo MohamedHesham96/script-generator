@@ -69,6 +69,11 @@
             </div>
 
             <div class="list-group-item">
+                <input id="updateType" name="scriptType" value="update" type="radio" style="cursor: pointer">
+                <label for="updateType" style="cursor: pointer">Update</label>
+            </div>
+
+            <div class="list-group-item">
                 <input id="deleteType" name="scriptType" value="delete" type="radio" style="cursor: pointer">
                 <label for="deleteType" style="cursor: pointer">Delete</label>
             </div>
@@ -111,10 +116,10 @@
             <strong>Select Database Tables</strong>
             <button class="btn btn-sm btn-outline-success float-end" data-bs-toggle="modal"
                     data-bs-target="#tableRecordModal" onclick="clearForm('tableRecordForm')"
-                    style="font-weight: bold">+ Add new entity +
+                    style="font-weight: bold">+ Add New Entity +
             </button>
         </div>
-        <div class="card-body" id="tableRecordsListDev">
+        <div class="card-body" id="tableRecordsListDev" style=" max-height: 500px; overflow-y: auto;">
             <jsp:include page="tableRecordsList.jsp"/>
         </div>
     </div>

@@ -15,10 +15,10 @@
                    id="${table.name}-${table.id}"
                    style="cursor: pointer">
             <label class="col-9" for="${table.name}-${table.id}" style="cursor: pointer">
-                <strong title="${table.name}"
+                <span title="${table.name}"
                         style=" overflow: hidden;  display: inline-block; text-overflow: ellipsis;  white-space: nowrap; width:100%;">
                         ${table.name}
-                </strong>
+                </span>
             </label>
             <span style="cursor: pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

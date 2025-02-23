@@ -33,21 +33,23 @@ public class TableService {
         List<String> scripts;
         if ("select".equalsIgnoreCase(scriptType)) {
             scripts = tableRecordRepository.getSelectScriptByIds(ids);
+        } else if ("update".equalsIgnoreCase(scriptType)) {
+            scripts = tableRecordRepository.getUpdateScriptByIds(ids);
         } else {
             scripts = tableRecordRepository.getDeleteScriptByIds(ids);
         }
-        String generatedScript = "";
+        StringBuilder generatedScript = new StringBuilder();
         for (String script : scripts) {
-            generatedScript += script + "\n\n";
+            generatedScript.append(script).append("\n\n");
         }
-        return generatedScript;
+        return generatedScript.toString();
     }
 
     public List<TableRecord> getAllTables() {
         return tableRecordRepository.findAllByOrderByName();
     }
 
-    public TableRecord save(TableRecord tableRecord) {
+    public void save(TableRecord tableRecord) {
         tableRecord.setName(firstLetterUpperCase(tableRecord.getName()));
         tableRecord.setCreatedBy(firstLetterUpperCase(tableRecord.getCreatedBy()));
         if (tableRecord.getId() == null) {
@@ -56,7 +58,7 @@ public class TableService {
             tableRecord.setCreatedOn(tableRecordRepository.getOne(tableRecord.getId()).getCreatedOn());
         }
         tableRecord.setModifiedOn(LocalDateTime.now());
-        return tableRecordRepository.save(tableRecord);
+        tableRecordRepository.save(tableRecord);
     }
 
     private String firstLetterUpperCase(String term) {
@@ -71,13 +73,13 @@ public class TableService {
         return tableRecordRepository.findById(tableRecordId).orElseGet(null);
     }
 
-    public List<TableRecord> search(String searchText, Boolean searchInQueries, String createdBy) {
+    public List search(String searchText, Boolean searchInQueries, String createdBy) {
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<TableRecord> criteria = criteriaBuilder.createQuery(TableRecord.class);
         Root<TableRecord> tableRecord = criteria.from(TableRecord.class);
-        CriteriaQuery criteriaQuery = criteria.select(tableRecord);
+        CriteriaQuery<TableRecord> criteriaQuery = criteria.select(tableRecord);
         List<Predicate> predicates = new ArrayList<>();
         String[] tags = searchText.split(",");
         if (!searchInQueries) {
@@ -88,6 +90,7 @@ public class TableService {
             for (String tag : tags) {
                 predicates.add(criteriaBuilder.like(tableRecord.get("name"), "%" + tag + "%"));
                 predicates.add(criteriaBuilder.like(tableRecord.get("selectScript"), "%" + tag + "%"));
+                predicates.add(criteriaBuilder.like(tableRecord.get("updateScript"), "%" + tag + "%"));
                 predicates.add(criteriaBuilder.like(tableRecord.get("deleteScript"), "%" + tag + "%"));
             }
         }

@@ -9,22 +9,34 @@
     }
 </style>
 <div class="modal" id="tableRecordModal" tabindex="-1" aria-labelledby="tableRecordModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h5 class="modal-title">Entity data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
+
             <div class="modal-body">
                 <form id="tableRecordForm">
                     <input type="hidden" id="tableId">
                     <div class="mb-2">
-                        <label for="tableName" class="form-label text-bold">Created by</label>
-                        <input id="createdBy" class="form-control" placeholder="Created by">
+                        <label for="createdBy" class="form-label text-bold">Created by:</label>
+                        <input list="nameOptions" class="form-control" id="createdBy" placeholder="Type or select a name...">
+                        <datalist id="nameOptions">
+                            <option value="Amir_Magdy">
+                            <option value="Hesham">
+                            <option value="Youssef">
+                            <option value="Mohamed_Saber">
+                            <option value="Amir_Reda">
+                            <option value="Ahmed_Bakr">
+                            <option value="Ahmed_Hossam">
+                        </datalist>
                     </div>
+
                     <div class="mb-2">
-                        <label for="tableName" class="form-label text-bold">Name</label>
+                        <label for="tableName" class="form-label text-bold">Title</label>
                         <input id="tableName" class="form-control" placeholder="name">
                     </div>
                     <div class="mb-2">
@@ -32,6 +44,12 @@
                         <textarea id="selectScript" rows="5" class="form-control"
                                   placeholder="Select script"></textarea>
                     </div>
+                    <div class="mb-2">
+                        <label for="updateScript" class="form-label text-bold">Update script</label>
+                        <textarea id="updateScript" rows="5" class="form-control"
+                                  placeholder="Update script"></textarea>
+                    </div>
+
                     <div class="mb-2">
                         <label for="deleteScript" class="form-label text-bold">Delete script</label>
                         <textarea id="deleteScript" rows="5" class="form-control"
@@ -70,6 +88,7 @@
                 $("#createdBy").val(data.createdBy);
                 $("#tableName").val(data.name);
                 $("#selectScript").val(data.selectScript);
+                $("#updateScript").val(data.updateScript);
                 $("#deleteScript").val(data.deleteScript);
                 $("#createdOn").text(data.createdOn.replaceAll("T", " ").split(".")[0]);
                 $("#modifiedOn").text(data.modifiedOn.replaceAll("T", " ").split(".")[0]);
@@ -86,6 +105,7 @@
     function saveTableRecord(isUpdateOperation) {
         var tableName = $("#tableName").val();
         var selectScript = $("#selectScript").val();
+        var updateScript = $("#updateScript").val();
         var deleteScript = $("#deleteScript").val();
         var createdBy = $("#createdBy").val();
         if (createdBy == "") {
@@ -105,6 +125,7 @@
             id: tableId,
             name: tableName,
             selectScript: selectScript,
+            updateScript: updateScript,
             deleteScript: deleteScript,
             createdBy: createdBy
         }
