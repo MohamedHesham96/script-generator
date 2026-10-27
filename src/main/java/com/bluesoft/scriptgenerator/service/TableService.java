@@ -75,7 +75,8 @@ public class TableService {
 
     public List search(String searchText, Boolean searchInQueries, String createdBy) {
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
-        Session session = sessionFactory.openSession();
+        // the session holds a pooled JDBC connection until closed, so it must always be closed
+        try (Session session = sessionFactory.openSession()) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<TableRecord> criteria = criteriaBuilder.createQuery(TableRecord.class);
         Root<TableRecord> tableRecord = criteria.from(TableRecord.class);
@@ -100,5 +101,6 @@ public class TableService {
         criteriaQuery.orderBy(criteriaBuilder.asc(tableRecord.get("name")));
         Query query = session.createQuery(criteriaQuery);
         return query.getResultList();
+        }
     }
 }
