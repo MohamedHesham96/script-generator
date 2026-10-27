@@ -8,9 +8,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Script Generator</title>
     <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="webjars/toastr/2.1.0/toastr.min.css" rel="stylesheet">
+    <link href="css/script-generator.css" rel="stylesheet">
 </head>
 <body>
 <script>
@@ -26,120 +28,138 @@
     </symbol>
 </svg>
 
-<div class="container">
-    <div class="ml-4 float-end">
-        <img height="120" src="images/msales-logo.png" alt="">
-    </div>
-
-    <div class="row">
-        <div class="alert alert-warning pt-2 pb-2 border-warning mt-3 col-10" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Warning:">
-                <use xlink:href="#exclamation-triangle-fill"></use>
-            </svg>
-            <strong>Step 1: </strong>
-            Please stop apache service
+<div class="container sg-page">
+    <header class="sg-header">
+        <img src="images/msales-logo.png" alt="mSales - Mobilize your Sales force">
+        <div>
+            <h1>Database Scripts</h1>
+            <p>Select entities and generate SQL scripts for your database.</p>
         </div>
-        <br>
-        <div class="alert alert-warning border-warning pt-2 pb-2 col-10" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Warning:">
+    </header>
+
+    <section class="sg-notices" aria-label="Safety checklist">
+        <div class="sg-notice sg-notice-critical" role="alert">
+            <svg class="sg-notice-icon" role="img" aria-label="Warning">
                 <use xlink:href="#exclamation-triangle-fill"></use>
             </svg>
-            <strong>Step 2: </strong>
-            Please make sure that you have backed up the database you are using
-            <button class="btn btn-sm btn-success float-end pb-0 pt-0 pl-2 pr-2" onclick="generateBackupScript()"
-                    style="font-weight: bold">
+            <div class="sg-notice-body">
+                <strong>Step 1</strong>
+                Please stop apache service
+            </div>
+        </div>
+        <div class="sg-notice" role="alert">
+            <svg class="sg-notice-icon" role="img" aria-label="Warning">
+                <use xlink:href="#exclamation-triangle-fill"></use>
+            </svg>
+            <div class="sg-notice-body">
+                <strong>Step 2</strong>
+                Please make sure that you have backed up the database you are using
+            </div>
+            <button type="button" class="btn btn-sm btn-success" onclick="generateBackupScript()">
                 Generate backup script
             </button>
         </div>
-    </div>
+    </section>
 
-    <div class="row">
-        <div class="input-group">
-            <label for="database-name" class="list-group-item"><strong>Database name: </strong></label>
-            <input id="database-name" placeholder="database name..." class="form-control list-group-item w-25 border-2"
-                   style="font-weight: bold">
-
-            <div class="list-group-item">
-                <label><strong>Query type: </strong></label>
+    <section class="sg-panel" aria-labelledby="config-title">
+        <div class="sg-panel-header">
+            <h2 id="config-title">Script configuration</h2>
+        </div>
+        <div class="sg-panel-body sg-config">
+            <div>
+                <label for="database-name" class="sg-field-label">Database name</label>
+                <input id="database-name" placeholder="database name..." class="form-control sg-input">
             </div>
 
-            <div class="list-group-item">
-                <input id="selectType" name="scriptType" value="select" type="radio" style="cursor: pointer" checked>
-                <label for="selectType" style="cursor: pointer">Select</label>
-            </div>
+            <div class="sg-config-options">
+                <div>
+                    <span class="sg-field-label" id="query-type-label">Query type</span>
+                    <div class="btn-group" role="group" aria-labelledby="query-type-label">
+                        <input id="selectType" name="scriptType" value="select" type="radio" class="btn-check" checked>
+                        <label for="selectType" class="btn btn-outline-primary">Select</label>
 
-            <div class="list-group-item">
-                <input id="updateType" name="scriptType" value="update" type="radio" style="cursor: pointer">
-                <label for="updateType" style="cursor: pointer">Update</label>
-            </div>
+                        <input id="updateType" name="scriptType" value="update" type="radio" class="btn-check">
+                        <label for="updateType" class="btn btn-outline-primary">Update</label>
 
-            <div class="list-group-item">
-                <input id="deleteType" name="scriptType" value="delete" type="radio" style="cursor: pointer">
-                <label for="deleteType" style="cursor: pointer">Delete</label>
-            </div>
+                        <input id="deleteType" name="scriptType" value="delete" type="radio" class="btn-check">
+                        <label for="deleteType" class="btn btn-outline-primary">Delete</label>
+                    </div>
+                </div>
 
-            <div class="list-group-item">
-                <input id="withDate" name="scriptType" type="checkbox" style="cursor: pointer">
-                <label for="withDate" style="cursor: pointer; font-weight: bold">With Date</label>
+                <div>
+                    <span class="sg-field-label">Options</span>
+                    <input id="withDate" name="scriptType" type="checkbox" class="btn-check">
+                    <label for="withDate" class="btn btn-outline-primary">With Date</label>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="row mt-3">
-        <div class="input-group">
-            <label for="searchText" class="list-group-item"><strong>Search: </strong></label>
-            <input id="searchText" onkeypress="searchEnter(event)" placeholder="search..." autofocus
-                   class="form-control list-group-item w-25 border-2"
-                   style="font-weight: bold">
-            <img id="searchButton" style="cursor: pointer" class="list-group-item btn-outline-info" height="44"
-                 src="images/search-icon.png" onclick="searchForData()">
-            <img id="loadingIcon" style="display: none" src="/images/spinner.gif" class="list-group-item" height="44"/>
-            <div class="list-group-item">
-                <input id="searchInQueries" name="scriptType" type="checkbox" style="cursor: pointer">
-                <label for="searchInQueries" style="cursor: pointer; font-weight: bold">Search in Queries</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-3">
-        <strong>Created By:</strong>
-        <span id="All" class="text-bold rounded-pill btn btn-sm btn-outline-primary active"
-              onclick="setLastSelectCreatedById('All'); searchForData();">All</span>
-        <c:forEach items="${createdByNames}" var="createdBy">
-            <span id="${createdBy}" class="text-bold rounded-pill btn btn-sm btn-outline-primary"
-                  onclick="setLastSelectCreatedById('${createdBy}'); searchForData()">${createdBy}</span>
-        </c:forEach>
-    </div>
-
-    <div class="card mt-3">
-        <div class="card-header">
-            <strong>Select Database Tables</strong>
-            <button class="btn btn-sm btn-outline-success float-end" data-bs-toggle="modal"
-                    data-bs-target="#tableRecordModal" onclick="clearForm('tableRecordForm')"
-                    style="font-weight: bold">+ Add New Entity +
+    <section class="sg-panel" aria-labelledby="scripts-title">
+        <div class="sg-panel-header">
+            <h2 id="scripts-title">Select Database Tables</h2>
+            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                    data-bs-target="#tableRecordModal" onclick="clearForm('tableRecordForm')">
+                + Add New Entity
             </button>
         </div>
-        <div class="card-body" id="tableRecordsListDev" style=" max-height: 500px; overflow-y: auto;">
+        <div class="sg-panel-body">
+            <div class="sg-search">
+                <div class="sg-search-box">
+                    <div class="sg-search-field">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                        <label for="searchText" class="visually-hidden">Search</label>
+                        <input id="searchText" onkeypress="searchEnter(event)" placeholder="search..." autofocus
+                               class="form-control sg-input">
+                    </div>
+                    <button id="searchButton" type="button" class="btn btn-primary" onclick="searchForData()">
+                        Search
+                    </button>
+                    <img id="loadingIcon" style="display: none" src="/images/spinner.gif" alt="Loading...">
+                </div>
+                <label class="sg-secondary-option" for="searchInQueries">
+                    <input id="searchInQueries" name="scriptType" type="checkbox" class="sg-check">
+                    Search in Queries
+                </label>
+            </div>
+
+            <div class="sg-chips" role="group" aria-label="Filter by creator">
+                <span class="sg-chips-label">Created By</span>
+                <button type="button" id="All" class="sg-chip active" aria-pressed="true"
+                        onclick="setLastSelectCreatedById('All'); searchForData();">All</button>
+                <c:forEach items="${createdByNames}" var="createdBy">
+                    <button type="button" id="${createdBy}" class="sg-chip" aria-pressed="false"
+                            onclick="setLastSelectCreatedById('${createdBy}'); searchForData()">${createdBy}</button>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="sg-list-scroll" id="tableRecordsListDev" tabindex="0" aria-label="Database scripts list">
             <jsp:include page="tableRecordsList.jsp"/>
         </div>
-    </div>
+    </section>
 
-    <div class="row mt-4" style="justify-content: center">
-        <a class="btn btn-success col-3" onclick="checkIsWithDateFlag()">
-            <strong>Generate script</strong>
-        </a>
-    </div>
+    <section class="sg-panel" aria-labelledby="output-title">
+        <div class="sg-panel-header">
+            <h2 id="output-title">Generated script</h2>
+            <button type="button" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2"
+                    onclick="copyToClipBoard()">
+                <img class="sg-copy-icon" src="images/copy-icon.png" alt="">Copy to clipboard
+            </button>
+        </div>
+        <div class="sg-panel-body">
+            <label for="script" class="visually-hidden">Generated script</label>
+            <textarea class="form-control" id="script" rows="8" disabled></textarea>
+        </div>
+    </section>
 
-    <div class="row mt-4">
-        <label for="script" style="font-weight: bold"></label><textarea class="form-control"
-                                                                        id="script" rows="8"
-                                                                        disabled></textarea>
-    </div>
-
-    <div class="row mt-4 mb-4" style="justify-content: center">
-        <a class="btn btn-outline-secondary col-2" onclick="copyToClipBoard()">
-            <strong><img height="32" src="images/copy-icon.png">Copy to clipboard</strong>
-        </a>
+    <div class="sg-actionbar">
+        <span class="sg-selected" aria-live="polite"><strong id="selectedCount">0</strong> selected</span>
+        <button type="button" class="btn btn-generate" onclick="checkIsWithDateFlag()">
+            Generate script
+        </button>
     </div>
 
     <jsp:include page="TableRecordModal.jsp"></jsp:include>
@@ -247,6 +267,7 @@
             contentType: "application/json",
             success: function (response) {
                 $("#tableRecordsListDev").html(response);
+                updateSelectedCount();
                 $("#loadingIcon").hide();
                 $("#searchButton").show();
             },
@@ -348,14 +369,21 @@
     let lastSelectedCreatedById = 'All';
 
     function setLastSelectCreatedById(selectedCreatedById) {
-        $("#" + lastSelectedCreatedById).removeClass("active");
-        $("#" + selectedCreatedById).addClass("active");
+        $("#" + lastSelectedCreatedById).removeClass("active").attr("aria-pressed", "false");
+        $("#" + selectedCreatedById).addClass("active").attr("aria-pressed", "true");
         lastSelectedCreatedById = selectedCreatedById;
+    }
+
+    function updateSelectedCount() {
+        $("#selectedCount").text($(".form-check-input:checkbox:checked").length);
     }
 </script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/toastr/2.1.0/toastr.min.js"></script>
 <script src="webjars/bootbox/5.5.2/bootbox.js"></script>
+<script>
+    $(document).on("change", ".form-check-input:checkbox", updateSelectedCount);
+</script>
 </body>
 </html>
